@@ -5,7 +5,8 @@ import dns.resolver
 import os
 import httplib
 iplist = [] #定义域名IP列表变量
-appdomin = "www.163.com"  # 定义业务域名
+#appdomin = "www.baidu.com"  # 定义业务域名
+appdomin = raw_input("plz input your appdomin:")  # 定义业务域名
 def get_iplist (domin="") :
     try:
         A = dns.resolver.query(domin,'A')
@@ -28,14 +29,16 @@ def checkip(ip):
 
         r = conn.getresponse()
         getcontent = r.read(15)
+        #print getcontent  #打印 getcontent
     finally:
-        if getcontent == "<!doctype html>":
+        if getcontent == "<!DOCTYPE html>":
             print ip + "[OK]"
         else:
             print ip + "[Error]"
+
 if __name__ == "__main__":
     if get_iplist(appdomin) and len(iplist) > 0:
         for ip in iplist:
             checkip(ip)
-        else:
+    else:
             print "dns resolver error"
